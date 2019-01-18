@@ -1,3 +1,4 @@
+// Varaiveis de Display e Imagem
 var largura = 1280;
 var altura = 720;
 var escala = 3/4;
@@ -8,21 +9,31 @@ var imgA = imgAltura * escala / 2;
 var l = largura * escala;
 var a = altura * escala;
 
+// Variaveis de Aparencia de Texto
 var tamanhoTextoPequeno = 25;
 var tamTxtP = tamanhoTextoPequeno * escala;
 var tamanhoTextoGrande = 50;
 var tamTxtG = tamanhoTextoGrande * escala;
-var corTexto = '#5555ff';
+var corTexto = '#385c8c';
 
-var estado = new Array();
-
+// Variaveis de Respostas
 var resposta;
+var respPos;
 var ops = [-1,-1,-1,-1];
 var opsPosDisp = [1, 3, 5, 7];
 
+// Varaiveis de Pontuação
 var pontos = 0;
-var pontosMaximo = 0;
+var pontosMax = 0;
 
+// Variaveis de Tempo
+var velocidade = 30;
+var tempo = 0;
+var tempoMaximo = 5 * velocidade;
+
+var estado = new Array();
+
+// Variavel com Nome dos Estados Em Ordem Alfabética
 var estadoNome=[
 	"Acre",
 	"Alagoas",
@@ -52,6 +63,7 @@ var estadoNome=[
 	"Tocantins"
 ];
 
+// Variavel com Sigla dos Estados
 var estadosSigla=[
 	"AC",
 	"AL",
@@ -67,9 +79,9 @@ var estadosSigla=[
 	"MG",
 	"PA",
 	"PB",
+	"PR",
 	"PE",
 	"PI",
-	"PR",
 	"RJ",
 	"RN",
 	"RS",
@@ -90,8 +102,8 @@ function preload(){
 
 function setup(){
 	createCanvas(l, a);
+	frameRate(velocidade);
 	imageMode(CENTER);
-	background(75);
 	musica.setVolume(0.1);
 	musica.setLoop(true);
 	musica.play();
@@ -99,24 +111,41 @@ function setup(){
 }
 
 function draw(){
-	
 }
 
 function keyPressed(){
+	// Verificar se a tecla apertada é valida
+	if(key >= '1' && key <= '4'){
+		// Verificar se a resposta foi digitada a tempo
+			// Verificar se a respsota foi correta
+		if(tempo<tempoMaximo && key == respPos+1){
+			pontos = pontos + tempoMaximo - tempo;
+		}
+		else{
+			// Verificar se a pontuação atual foi maior que a maior pontuação
+			if(pontos>pontosMax){
+				pontosMax=pontos;
+			}
+			pontos=0;
+		}
+		novoMapa();
+	}
 }
 
 function novoMapa(){
+	background(75);
+
 	// Desenhar Placar
 	fill(corTexto);
 	textSize(tamTxtP);
 	text('Pontos: '+pontos, l/12, a/12);
-	text('Maximo de Pontos: '+pontosMaximo, l/12, a/12*11);
+	text('Máximo de Pontos: '+pontosMax, l/12, a/12*11);
 
 	// Resetando e Configurando Opçoes
 	resposta = floor(random(0,26));
 	ops = [-1,-1,-1,-1];
-	opsPos = floor(random(0,4));
-	ops[opsPos] = resposta;
+	respPos = floor(random(0,4));
+	ops[respPos] = resposta;
 		// Configurar as outras alternativas
 	for(var i=0; i<4; i++){
 		if(ops[i]==-1){
