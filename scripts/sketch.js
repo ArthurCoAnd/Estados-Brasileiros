@@ -1,3 +1,28 @@
+var largura = 1280;
+var altura = 720;
+var escala = 3/4;
+var imgLargura = 960;
+var imgAltura = 981;
+var imgL = imgLargura * escala / 2;
+var imgA = imgAltura * escala / 2;
+var l = largura * escala;
+var a = altura * escala;
+
+var tamanhoTextoPequeno = 25;
+var tamTxtP = tamanhoTextoPequeno * escala;
+var tamanhoTextoGrande = 50;
+var tamTxtG = tamanhoTextoGrande * escala;
+var corTexto = '#5555ff';
+
+var estado = new Array();
+
+var resposta;
+var ops = [-1,-1,-1,-1];
+var opsPosDisp = [1, 3, 5, 7];
+
+var pontos = 0;
+var pontosMaximo = 0;
+
 var estadoNome=[
 	"Acre",
 	"Alagoas",
@@ -56,44 +81,11 @@ var estadosSigla=[
 	"TO"
 ];
 
-var largura = 1280;
-var altura = 720;
-var escala = 3/4;
-var imgLargura = 960;
-var imgAltura = 981;
-var imgL = imgLargura * escala / 2;
-var imgA = imgAltura * escala / 2;
-var l = largura * escala;
-var a = altura * escala;
-
 function preload(){
 	musica = loadSound('audios/brasileirinho8bit.mp3');
-	ac = loadImage('imagens/AC.png');
-	al = loadImage('imagens/AL.png');
-	ap = loadImage('imagens/AP.png');
-	am = loadImage('imagens/AM.png');
-	ba = loadImage('imagens/BA.png');
-	ce = loadImage('imagens/CE.png');
-	es = loadImage('imagens/ES.png');
-	go = loadImage('imagens/GO.png');
-	ma = loadImage('imagens/MA.png');
-	mt = loadImage('imagens/MT.png');
-	ms = loadImage('imagens/MS.png');
-	mg = loadImage('imagens/MG.png');
-	pa = loadImage('imagens/PA.png');
-	pb = loadImage('imagens/PB.png');
-	pe = loadImage('imagens/PE.png');
-	pi = loadImage('imagens/PI.png');
-	pr = loadImage('imagens/PR.png');
-	rj = loadImage('imagens/RJ.png');
-	rn = loadImage('imagens/RN.png');
-	rs = loadImage('imagens/RS.png');
-	ro = loadImage('imagens/RO.png');
-	rr = loadImage('imagens/RR.png');
-	sc = loadImage('imagens/SC.png');
-	sp = loadImage('imagens/SP.png');
-	se = loadImage('imagens/SE.png');
-	to = loadImage('imagens/TO.png');
+	for(var i=0; i<26; i++){
+		estado[i] = loadImage("imagens/"+estadosSigla[i]+".png");
+	}
 }
 
 function setup(){
@@ -107,36 +99,52 @@ function setup(){
 }
 
 function draw(){
+	
 }
 
 function keyPressed(){
 }
 
 function novoMapa(){
-	image(ac, l/4, a/2, imgL, imgA);
-	image(al, l/4, a/2, imgL, imgA);
-	image(ap, l/4, a/2, imgL, imgA);
-	image(am, l/4, a/2, imgL, imgA);
-	image(ba, l/4, a/2, imgL, imgA);
-	image(ce, l/4, a/2, imgL, imgA);
-	image(es, l/4, a/2, imgL, imgA);
-	image(go, l/4, a/2, imgL, imgA);
-	image(ma, l/4, a/2, imgL, imgA);
-	image(mt, l/4, a/2, imgL, imgA);
-	image(ms, l/4, a/2, imgL, imgA);
-	image(mg, l/4, a/2, imgL, imgA);
-	image(pa, l/4, a/2, imgL, imgA);
-	image(pb, l/4, a/2, imgL, imgA);
-	image(pe, l/4, a/2, imgL, imgA);
-	image(pi, l/4, a/2, imgL, imgA);
-	image(pr, l/4, a/2, imgL, imgA);
-	image(rj, l/4, a/2, imgL, imgA);
-	image(rn, l/4, a/2, imgL, imgA);
-	image(rs, l/4, a/2, imgL, imgA);
-	image(ro, l/4, a/2, imgL, imgA);
-	image(rr, l/4, a/2, imgL, imgA);
-	image(sc, l/4, a/2, imgL, imgA);
-	image(sp, l/4, a/2, imgL, imgA);
-	image(se, l/4, a/2, imgL, imgA);
-	image(to, l/4, a/2, imgL, imgA);
+	// Desenhar Placar
+	fill(corTexto);
+	textSize(tamTxtP);
+	text('Pontos: '+pontos, l/12, a/12);
+	text('Maximo de Pontos: '+pontosMaximo, l/12, a/12*11);
+
+	// Resetando e Configurando Opçoes
+	resposta = floor(random(0,26));
+	ops = [-1,-1,-1,-1];
+	opsPos = floor(random(0,4));
+	ops[opsPos] = resposta;
+		// Configurar as outras alternativas
+	for(var i=0; i<4; i++){
+		if(ops[i]==-1){
+			var opsAtual = floor(random(0,26));
+			while(opsAtual == ops[0] || opsAtual == ops[1] || opsAtual == ops[2] || opsAtual == ops[3]){
+				opsAtual = floor(random(0,26));
+			}
+			ops[i] = opsAtual;
+		}
+	}
+
+	// Desenhar Mapa
+	for(var i=0; i<26; i++){
+		if(i==resposta){
+			tint(250,0,0);
+			image(estado[i], l/4, a/2, imgL, imgA);
+		}
+		else{
+			noTint();
+			image(estado[i], l/4, a/2, imgL, imgA);
+		}
+		
+	}
+
+	// Desenhar Opçoes
+	fill(corTexto);
+	textSize(tamTxtG);
+	for(var i=0; i<4; i++){
+		text(i+1+' - '+estadoNome[ops[i]], l/2, a/8*opsPosDisp[i]);
+	}
 }
