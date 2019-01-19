@@ -104,6 +104,8 @@ function setup(){
 	createCanvas(l, a);
 	frameRate(velocidade);
 	imageMode(CENTER);
+	rectMode(CENTER);
+	noStroke();
 	musica.setVolume(0.1);
 	musica.setLoop(true);
 	musica.play();
@@ -111,6 +113,9 @@ function setup(){
 }
 
 function draw(){
+	fill(corTexto);
+	rect(l/64*30, a/2, l/48, a/tempoMaximo*tempo);
+	tempo++;
 }
 
 function keyPressed(){
@@ -128,6 +133,7 @@ function keyPressed(){
 			}
 			pontos=0;
 		}
+		tempo=0;
 		novoMapa();
 	}
 }
