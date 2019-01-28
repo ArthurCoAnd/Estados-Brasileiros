@@ -1,6 +1,6 @@
 # Estados Brasileiros
 
-Jogo com o mapa do Brasil com um de seus estados destacados. 4 opções de resposta aparecem e a correta deve ser dada antes do tempo se esgotar.
+Jogo com o mapa do Brasil com um de seus estados destacados. 4 opções de respostas aparecem e a correta deve ser dada antes do tempo se esgotar.
 	
 ## Objetivos
 
