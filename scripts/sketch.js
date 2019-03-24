@@ -14,7 +14,7 @@ var tamanhoTextoPequeno = 25;
 var tamTxtP = tamanhoTextoPequeno * escala;
 var tamanhoTextoGrande = 50;
 var tamTxtG = tamanhoTextoGrande * escala;
-var corTexto = '#385c8c';
+var corTexto = 'white';
 
 // Variaveis de Respostas
 var resposta;
@@ -140,7 +140,7 @@ function setup(){
 function draw(){
 	// Jogo
 	if(sit==1){
-		fill(corTexto);
+		fill(255,0,0);
 		rect(l/64*30, a/2, l/48, a/tempoMaximo*tempo);
 		tempo++;
 	}
