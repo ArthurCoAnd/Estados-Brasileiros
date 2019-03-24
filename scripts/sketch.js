@@ -1,7 +1,7 @@
 // Varaiveis de Display e Imagem
-var largura = 1280;
-var altura = 720;
-var escala = 3/4;
+var largura = window.innerWidth;
+var altura = window.innerHeight;
+var escala = 1;
 var imgLargura = 960;
 var imgAltura = 981;
 var imgL = imgLargura * escala / 2;
@@ -118,7 +118,7 @@ function preload(){
 
 function setup(){
 	// Configurações de Exibiçao
-	createCanvas(l, a);
+	createCanvas(l,a);
 	frameRate(velocidade);
 	// Configurações de Imagens
 	imageMode(CENTER);
